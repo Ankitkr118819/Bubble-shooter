@@ -552,7 +552,7 @@ let userAddress;
 const BASE_CHAIN_ID = 8453; // Base Mainnet
 
 const connectWalletBtn = document.getElementById('connectWalletBtn');
-const payToPlayBtn = document.getElementById('payToPlayBtn');
+const startGameBtn = document.getElementById('startGameBtn');
 const web3Modal = document.getElementById('web3Modal');
 const web3Status = document.getElementById('web3Status');
 const dailyCheckInBtn = document.getElementById('dailyCheckInBtn');
@@ -633,35 +633,13 @@ async function switchNetwork() {
 function walletConnected() {
     web3Status.innerText = `Connected: ${userAddress.substring(0, 6)}...${userAddress.substring(38)}`;
     connectWalletBtn.classList.add('hidden');
-    payToPlayBtn.classList.remove('hidden');
+    startGameBtn.classList.remove('hidden');
     checkDailyStatus();
 }
 
-async function payGasToPlay() {
-    try {
-        payToPlayBtn.innerText = "Confirming...";
-        payToPlayBtn.disabled = true;
-        
-        // Send 0 ETH to self with builder code in data
-        const tx = await signer.sendTransaction({
-            to: userAddress,
-            value: ethers.utils.parseEther("0"),
-            data: encodedBuilderCode
-        });
-        
-        web3Status.innerText = "Transaction pending...";
-        await tx.wait();
-        
-        // Success
-        web3Modal.classList.add('hidden');
-        isGameStarted = true;
-        
-    } catch (error) {
-        console.error(error);
-        web3Status.innerText = "Transaction failed or rejected.";
-        payToPlayBtn.innerText = "Pay Gas to Play";
-        payToPlayBtn.disabled = false;
-    }
+function startGame() {
+    web3Modal.classList.add('hidden');
+    isGameStarted = true;
 }
 
 function checkDailyStatus() {
@@ -706,6 +684,6 @@ async function handleDailyCheckIn() {
 }
 
 connectWalletBtn.addEventListener('click', connectWallet);
-payToPlayBtn.addEventListener('click', payGasToPlay);
+startGameBtn.addEventListener('click', startGame);
 dailyCheckInBtn.addEventListener('click', handleDailyCheckIn);
 
