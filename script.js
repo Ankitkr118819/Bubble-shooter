@@ -545,7 +545,7 @@ loop();
 // ----------------------------------------------------
 // Web3 Setup
 // ----------------------------------------------------
-const BUILDER_CODE = "bc_3xzi5e5s";
+const BUILDER_CODE = "bc_w1s789ht";
 let provider;
 let signer;
 let userAddress;
@@ -568,7 +568,7 @@ function stringToHex(str) {
     return hex;
 }
 
-const encodedBuilderCode = stringToHex(BUILDER_CODE); // e.g. "0x62635f33787a6935653573"
+const encodedBuilderCode = "0x62635f77317337383968740b0080218021802180218021802180218021";
 
 async function connectWallet() {
     if (typeof window.ethereum !== 'undefined') {
